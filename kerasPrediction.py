@@ -6,6 +6,15 @@ import pandas_datareader.data as web
 import datetime
 import pandas as pd
 import numpy as np
+import argparse
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("ticker", help = " please insert the ticker of any stock in the S&P500", type = str)
+args = parser.parse_args()
+
+ticker = args.ticker
+directory = "closingstock_CSV" + "/" + str(ticker) + ".csv"
 #import matplotlib.pyplot as plt
 
 """ # population script
@@ -106,7 +115,7 @@ def normalise_windows(window_data):
 epochs = 1 # this is how many passes our model will have at the training examples, how many tries itll have to optimize
 seq_len = 50
 
-X_train, y_train, X_test, y_test = load_data('closingSP.csv', seq_len, True)
+X_train, y_train, X_test, y_test = load_data(directory, seq_len, True)
 
 
 print('> Data Loaded. Compiling...')
