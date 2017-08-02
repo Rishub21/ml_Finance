@@ -4,6 +4,7 @@ from collections import Counter
 from sklearn import svm, neighbors
 from sklearn.cross_validation import train_test_split
 from sklearn.ensemble import VotingClassifier, RandomForestClassifier
+import argparse
 
 
 
@@ -13,6 +14,11 @@ DISCLAIMERL: With this simple model we are going to get at best 40-50 percent ac
 
 """
 
+parser = argparse.ArgumentParser()
+parser.add_argument("ticker", help = " please insert the ticker of any stock in the S&P500", type = str)
+args = parser.parse_args()
+
+ticker = args.ticker
 
 
 def return_calc(ticker):
@@ -25,11 +31,7 @@ def return_calc(ticker):
         df[str(ticker) + "_" + str(num) ] = ((df[ticker].shift(-num) - df[ticker])/df[ticker])
 
     df.fillna(0, inplace = True)
-    print (df)
     return tickers, df
-
-
-
 
 
 def buy_sell_hold(*args): # where args is going to be the group of 7 columns that each represent the change in price over the course of the week
@@ -47,8 +49,6 @@ def buy_sell_hold(*args): # where args is going to be the group of 7 columns tha
 
 def extract_featuresets(ticker):
     tickers, df = return_calc(ticker)
-    print "THIS is tickers"
-    print tickers
     df[str(ticker) + "_target"] = list(map(buy_sell_hold, df[str(ticker) + "_1"],
                                                           df[str(ticker) + "_2"],
                                                           df[str(ticker) + "_3"],
@@ -100,7 +100,8 @@ def ml(ticker):
     confidence =  clf_ensemble.score(X_test, y_test) # where the confidence measures the accuracy of this model
     predictions = clf_ensemble.predict(X_test)
     print ("predicted spread", Counter(predictions))
-    print confidence
+    print "Where 1 : Buy, -1 : Sell, O : Hold"
+    print ("This model is " + str(confidence * 100)+ "%" + " accurate" )
     return confidence
 
-ml("GOOG") # enter whatever stock ticker in the s&p500 that you want
+ml(ticker) # enter whatever stock ticker in the s&p500 that you want
