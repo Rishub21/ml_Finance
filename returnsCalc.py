@@ -9,7 +9,7 @@ from sklearn.ensemble import VotingClassifier, RandomForestClassifier
 
 """
 the goal of this script is to predict if we should buy, sell, or hold a particular stock based off of the changes in value of every single other stock in the S&P 500
-DISCLAIMERL: With this simple model we are going to get at best 40-50 percent accuracy
+DISCLAIMER: With this simple model we are going to get at best 40-50 percent accuracy in terms of buy/sell signals
 
 """
 
