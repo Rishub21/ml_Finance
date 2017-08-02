@@ -10,7 +10,7 @@ import argparse
 
 """
 the goal of this script is to predict if we should buy, sell, or hold a particular stock based off of the changes in value of every single other stock in the S&P 500
-DISCLAIMERL: With this simple model we are going to get at best 40-50 percent accuracy
+DISCLAIMER: With this simple model we are going to get at best 40-50 percent accuracy in terms of buy/sell signals
 
 """
 
@@ -86,7 +86,7 @@ def ml(ticker):
     clf = neighbors.KNeighborsClassifier()
     clf.fit(X_train, y_train)
 
-    # we are going to use skilit's ensemble learning package called Voting Cassifier to make predictions with three different models and then use them all to "vote" on the final result
+    # we are going to use scikit's ensemble learning package called Voting Cassifier to make predictions with three different models and then use them all to "vote" on the final result
     clf_ensemble = VotingClassifier([( "lsvc", svm.LinearSVC()), # the reason linear svc would make sesnse is that each of our x values is actually a list of values where each value is the price of a stock for that day, and the whole sublist is for every single stock
                                      ("knn", neighbors.KNeighborsClassifier()),
                                       ("rfor", RandomForestClassifier())])
