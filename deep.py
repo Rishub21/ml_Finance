@@ -24,11 +24,11 @@ def load_data(filename, seq_len, normalise_window):
     if normalise_window:
         result = normalise_windows(result)
         print "CONDUCTED"
-
-
-
+        #print result
 
     result = np.array(result)
+    #print "$$$$$$$$$$$$$$$$"
+#    print result.shape
 
     row = round(0.9 * result.shape[0])
     train = result[:int(row), :]
@@ -45,8 +45,8 @@ def load_data(filename, seq_len, normalise_window):
     x_test = np.reshape(x_test, (x_test.shape[0], x_test.shape[1], 1))
 
     print "*************"
-    print x_test
-
+    print x_train
+    print x_train.shape
     return [x_train, y_train, x_test, y_test]
 
 def normalise_windows(window_data):
@@ -60,7 +60,7 @@ def build_model(layers):
     model = Sequential()
 
     model.add(LSTM(
-        input_dim=layers[0],
+        input_dim=layers[0], # should be just one dimensional if we only have prices as our data input
         output_dim=layers[1],
         return_sequences=True))
     model.add(Dropout(0.2))
@@ -85,10 +85,10 @@ def predict_sequences_multiple(model, data, window_size, prediction_len):
 
     for i in range(int(len(data)/prediction_len)):
         curr_frame = data[i*prediction_len]
-        print data
-        print "**********"
+        #print data
+        #print "**********"
         print len(data)
-        print curr_frame
+        #print curr_frame
         predicted = []
         for j in range(prediction_len):
             predicted.append(model.predict(curr_frame[newaxis,:,:])[0,0])
@@ -107,11 +107,15 @@ print('> Loading data... ')
 
 X_train, y_train, X_test, y_test = load_data('closingSP.csv', seq_len, True)
 
+print "//////////////////////"
+print X_train.shape
+
 
 print('> Data Loaded. Compiling...')
-print X_train
+#print X_train
 
 model = build_model([1, 50, 100, 1])
+print model.summary()
 
 model.fit(
     X_train,
@@ -123,5 +127,5 @@ model.fit(
 predictions = predict_sequences_multiple(model, X_test, seq_len, 50)
 
 print"&"
-print predictions
+#print predictions
 #predicted = lstm.predict_sequence_full(model, X_test, seq_

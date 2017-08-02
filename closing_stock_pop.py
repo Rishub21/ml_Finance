@@ -34,5 +34,4 @@ for name in filename_list:
     prime_directory = finaldirectory + "/" + name
     print prime_directory
     with open("prime_directory", "wb+") as stockfile:
-        df = df[1:]
         df.to_csv(prime_directory, index = False, header = False)
