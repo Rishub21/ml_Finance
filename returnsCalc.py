@@ -86,7 +86,7 @@ def ml(ticker):
     clf = neighbors.KNeighborsClassifier()
     clf.fit(X_train, y_train)
 
-    # we are going to use skilit's ensemble learning package called Voting Cassifier to make predictions with three different models and then use them all to "vote" on the final result
+    # we are going to use scikit's ensemble learning package called Voting Cassifier to make predictions with three different models and then use them all to "vote" on the final result
     clf_ensemble = VotingClassifier([( "lsvc", svm.LinearSVC()), # the reason linear svc would make sesnse is that each of our x values is actually a list of values where each value is the price of a stock for that day, and the whole sublist is for every single stock
                                      ("knn", neighbors.KNeighborsClassifier()),
                                       ("rfor", RandomForestClassifier())])
