@@ -28,7 +28,7 @@ scikit-learn==0.18.2
 scipy==0.19.1
 six==1.10.0
 subprocess32==3.2.7
-tensorflow==1.2.1
+tensorflow==1.15.4
 Theano==0.9.0
 urllib3==1.21.1
 Werkzeug==0.12.2
